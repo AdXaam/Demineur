@@ -8,6 +8,8 @@ window.addEventListener("load", async (event) => {
 
         let data = await ApiTools.fetchData(`https://minesweeper.js.apprendre-est.fun/generate_grid.php?rows=${lines}&cols=${cols}&mines=${mines}`);
 
+        console.log(data)
+
         // Supposons que vous avez un conteneur HTML avec l'ID "game-grid" pour afficher la grille
         let gridContainer = document.getElementById("game-grid");
 
@@ -36,5 +38,28 @@ window.addEventListener("load", async (event) => {
                 gridContainer.appendChild(cellElement);
             }
         }
-    }); // Ajoutez la fermeture des parenthèses pour l'écouteur d'événements "click" ici
-}); // Ajoutez la fermeture des parenthèses pour l'écouteur d'événements "load" ici
+
+        // Ajout des gestionnaires d'événements "click" aux cases
+        let gridCells = document.querySelectorAll(".grid-cell");
+        gridCells.forEach((cell) => {
+            cell.addEventListener("click", () => {
+                const row = cell.dataset.row; // Récupérer la valeur du numéro de ligne
+                const col = cell.dataset.col; // Récupérer la valeur du numéro de colonne
+                const cellValue = data[row][col]; // Récupérer la valeur de la case dans le tableau data
+
+                if (cellValue === 0) {
+                    // Gérer le cas où la case ne contient pas de mine (0)
+                    cell.classList.add("discovered"); // Appliquer un style différent pour les cases découvertes
+                    // Ajoutez ici la logique pour révéler les cases adjacentes si elles ne contiennent pas de mine
+                } else if (cellValue === 1) {
+                    // Gérer le cas où la case contient une mine (1)
+                    cell.classList.add("mine"); // Appliquer un style différent pour les cases contenant une mine
+                    // Ajoutez ici la logique pour gérer la fin de partie (perdu)
+                }
+
+                // Mettez en place la logique d'interaction en fonction de la valeur de cellValue
+                // Par exemple, révéler si la case contient une mine, mettre à jour l'affichage, etc.
+            });
+        });
+    }); // Fermez la parenthèse pour l'écouteur d'événements "click" du bouton "inputSubmit"
+}); // Fermez la parenthèse pour l'écouteur d'événements "load"

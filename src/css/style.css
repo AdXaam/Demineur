@@ -27,3 +27,11 @@
     background-color: lightgray;
     cursor: default;
 }
+
+.discovered {
+    background-color: aqua;
+}
+
+.mine {
+    background-color: red;
+}
