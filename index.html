@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Démineur JS Affouard</title>
+    <link href="src/css/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+<h1>Démineur</h1>
+
+
+<label>Lignes</label>
+<input id="lines" type="number" min="1" value="5" name="lines" required>
+<label>Colonnes</label>
+<input id="cols" type="number" min="1" value="5" name="cols" required>
+<label>Mines</label>
+<input id="mines" type="number" min="1" value="5" name="mines" required>
+<input id="inputSubmit" type="submit" value="Valider">
+ <br>
+<div id="game-grid">
+
+</div>
+
+<script src="src/tools/ApiTools.js"></script>
+<script src="src/js/script.js"></script>
+
+</body>
+
+</html>

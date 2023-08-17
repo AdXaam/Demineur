@@ -1,0 +1,29 @@
+/* Styles pour la grille */
+#game-grid {
+    display: grid;
+}
+
+/* Styles pour les cases de la grille */
+.grid-cell {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    display: block;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 18px;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Ajoutez un style différent pour les cases avec une mine */
+.grid-cell.mine {
+    background-color: red;
+    color: white;
+}
+
+/* Ajoutez un style différent pour les cases découvertes */
+.grid-cell.discovered {
+    background-color: lightgray;
+    cursor: default;
+}
