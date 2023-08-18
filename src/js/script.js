@@ -26,9 +26,9 @@ window.addEventListener("load", async (event) => {
                 const cellValue = data[row][col]; // Valeur de la case actuelle (0 ou 1)
 
                 const cellElement = document.createElement("div");
-                cellElement.classList.add("grid-cell"); // Ajouter des classes pour le style
-                cellElement.dataset.row = row; // Ajouter un attribut personnalisé pour le numéro de ligne
-                cellElement.dataset.col = col; // Ajouter un attribut personnalisé pour le numéro de colonne
+                cellElement.classList.add("grid-cell");
+                cellElement.dataset.row = row;
+                cellElement.dataset.col = col;
 
                 // Ajouter la case à la grille
                 gridContainer.appendChild(cellElement);
@@ -39,38 +39,32 @@ window.addEventListener("load", async (event) => {
         let gridCells = document.querySelectorAll(".grid-cell");
         gridCells.forEach((cell) => {
             cell.addEventListener("click", () => {
-                const row = parseInt(cell.dataset.row); // Récupérer la valeur du numéro de ligne
-                const col = parseInt(cell.dataset.col); // Récupérer la valeur du numéro de colonne
-                const cellValue = data[row][col]; // Récupérer la valeur de la case dans le tableau data
+                const row = parseInt(cell.dataset.row);
+                const col = parseInt(cell.dataset.col);
+                const cellValue = data[row][col];
 
                 if (cellValue === 0) {
-                    // Gérer le cas où la case ne contient pas de mine (0)
+
                     cell.classList.add("discovered");
-                    // Ajouter ici la logique pour révéler les cases adjacentes si elles ne contiennent pas de mine
                     revealAdjacentEmptyCells(row, col);
                 } else if (cellValue === 1) {
-                    // Gérer le cas où la case contient une mine (1)
-                    cell.classList.add("mine"); // Appliquer un style différent pour les cases contenant une mine
-                    // Ajouter ici la logique pour gérer la fin de partie (perdu)
+
+                    cell.classList.add("mine");
+                    handleGameOver(false);
                 }
 
-                // Mettez en place la logique d'interaction en fonction de la valeur de cellValue
-                // Par exemple, révéler si la case contient une mine, mettre à jour l'affichage, etc.
             });
         });
 
-// Fonction pour révéler les cases adjacentes vides (0) en indiquant le nombre de mines autour
+        // Fonction pour révéler les cases adjacentes vides (0) en indiquant le nombre de mines autour
         function revealAdjacentEmptyCells(row, col) {
-            let minesCount = 0; // Compteur de mines adjacentes
+            let minesCount = 0;
 
-            // Vérifier les cases autour de la case actuelle (jusqu'à 8 cases adjacentes)
             for (let r = row - 1; r <= row + 1; r++) {
                 for (let c = col - 1; c <= col + 1; c++) {
-                    // Vérifier les limites de la grille
                     if (r >= 0 && r < lines && c >= 0 && c < cols) {
                         const adjacentCellValue = data[r][c];
 
-                        // Incrémenter le compteur si la case adjacente contient une mine
                         if (adjacentCellValue === 1) {
                             minesCount++;
                         }
@@ -78,11 +72,18 @@ window.addEventListener("load", async (event) => {
                 }
             }
 
-            // Mettre à jour le contenu de la case actuelle avec le nombre de mines adjacentes
             const currentCell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-            currentCell.textContent = minesCount; // Afficher le nombre de mines adjacentes
-            currentCell.classList.add("discovered"); // Marquer la case comme découverte
+            currentCell.textContent = minesCount;
+            currentCell.classList.add("discovered");
         }
 
+        // Fonction pour gérer la fin de partie (victoire ou défaite)
+        function handleGameOver(isWin) {
+            if (isWin) {
+                alert("Vous avez gagné !");
+            } else {
+                alert("Vous avez perdu !");
+            }
+        }
     });
 });
